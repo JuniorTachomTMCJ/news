@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,5 @@ Route::get('/', function () {
 Route::prefix('admin')->group(function () {
     App::setLocale('fr');
     Route::resource('category', CategoryController::class);
+    Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
 });

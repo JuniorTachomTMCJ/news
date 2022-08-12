@@ -46,9 +46,16 @@
 
             <!-- Nav Item - Category -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{route('category.index')}}">
                     <i class="fa fa-list-alt"></i>
                     <span>Categorie</span></a>
+            </li>
+
+            <!-- Nav Item - Article -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('article.index')}}">
+                    <i class="far fa-newspaper"></i>
+                    <span>Article</span></a>
             </li>
 
             <!-- Divider -->
@@ -270,7 +277,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; news 2022</span>
                     </div>
                 </div>
             </footer>
@@ -325,6 +332,9 @@
     <script src="{{URL::asset('admin_assets/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{URL::asset('admin_assets/js/demo/chart-pie-demo.js')}}"></script>
     <script src="{{URL::asset('admin_assets/js/demo/datatables-demo.js')}}"></script>
+
+
+    @yield('script')
 
 </body>
 
