@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.layaout');
+});
+
+// Route::group(['prefix' => '{lang}'], function ($lang) {
+//     App::setLocale($lang);
+//     Route::prefix('admin')->group(function () {
+//         Route::resource('category', CategoryController::class);
+//     });
+// });
+// Route::group(['prefix' => '{locale}/admin', 'where' => ['locale' => '[a-zA-Z]{2}']], function ($locale) {
+//     if (!in_array($locale, ['en', 'fr'])) {
+//         abort(400);
+//     }
+
+//     App::setLocale($locale);
+//     Route::resource('category', CategoryController::class);
+// });
+
+Route::prefix('admin')->group(function () {
+    App::setLocale('fr');
+    Route::resource('category', CategoryController::class);
 });
