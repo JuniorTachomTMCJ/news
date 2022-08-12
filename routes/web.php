@@ -39,4 +39,6 @@ Route::prefix('admin')->group(function () {
     App::setLocale('fr');
     Route::resource('category', CategoryController::class);
     Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
+
+    Route::get('/category/{slug}/article', [CategoryController::class, 'showArticles'])->name('article.show.articles');
 });

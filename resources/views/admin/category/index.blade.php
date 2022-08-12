@@ -51,6 +51,8 @@
                                     <button type="button" class="dropdown-item " data-toggle="modal" data-target="#editModal-{{$category->id}}">
                                         Modifier
                                     </button>
+
+                                    <a href="{{route('article.show.articles', ['slug'=> $category->slug])}}" class="dropdown-item ">Voir les articles</a>
                                     <div class="dropdown-divider"></div>
 
                                     <!-- Button trigger modal Delete -->

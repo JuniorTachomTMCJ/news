@@ -101,4 +101,13 @@ class CategoryController extends Controller
 
         return redirect()->route('category.index')->with('success', 'Catégrie supprimée avec succès');
     }
+
+
+    public function showArticles(String $slug)
+    {
+
+        $category = Category::query()->where('slug', $slug)->firstOrFail();
+
+        return view('admin.category.showArticles')->with(['articles' => $category->articles, 'category' => $category]);
+    }
 }
