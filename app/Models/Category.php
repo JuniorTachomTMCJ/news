@@ -31,4 +31,9 @@ class Category extends Model
             $category->slug = $slug;
         });
     }
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 }

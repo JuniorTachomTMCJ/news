@@ -69,6 +69,29 @@
     </div>
 
     <div class="form-group">
+        <label for="categories">Categorie(s) <small>Choissez les categories</small> </label>
+        <select class="custom-select" multiple name="categories[]" id="categories" aria-placeholder="Choissez les categories">
+
+            @if (count(collect(old('categories'))))
+            @foreach ($categories as $category)
+            <option value="{{$category->id}}" {{ (collect(old('categories'))->contains($category->id)) ? 'selected':'' }}>{{$category->label}}</option>
+            @endforeach
+            @else
+            @foreach ($categories as $category)
+            <option value="{{$category->id}}" {{ ($article->categories->find($category)) ? 'selected' : ''}}>{{$category->label}}</option>
+            @endforeach
+            @endif
+
+            {{-- @foreach ($categories as $category)
+            <option value="{{$category->id}}" {{ (collect(old('categories'))->contains($category->id)) ? 'selected':'' }} {{ ($article->categories->find($category)) ? 'selected' : ''}}>{{$category->label}}</option>
+            @endforeach --}}
+        </select>
+        @error('categories')
+        <small id="" class="form-text text-danger">{{$message}}</small>
+        @enderror
+    </div>
+
+    <div class="form-group">
         <label for="url">Lien</label>
         <input type="url" class="form-control" name="url" id="url" aria-describedby="urlHelp" value="{{old('url',$article->url)}}" />
         @error('url')

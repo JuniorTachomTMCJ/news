@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -28,7 +29,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('admin.article.create');
+        $categories = Category::query()->latest('label')->get();
+
+        return view('admin.article.create')->with('categories', $categories);
     }
 
     /**
@@ -45,8 +48,8 @@ class ArticleController extends Controller
             'description' => 'required|string',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'content' => 'required|string',
-            // 'categories' => 'array',
-            // 'categories.*' => 'required|integer|min:1',
+            'categories' => 'required|array|distinct',
+            'categories.*' => 'required|integer|exists:categories,id',
         ]);
 
         $name = $request->file('image')->getClientOriginalName();
@@ -55,13 +58,23 @@ class ArticleController extends Controller
         $article = new Article($request->all());
         $article->urlToImage = $path;
 
+
+
         try {
+            DB::beginTransaction();
             $article->saveOrFail();
+
+            $categories = Category::query()->findOrFail($request->categories);
+            $article->categories()->attach($categories);
+            DB::commit();
         } catch (\Throwable $th) {
+
             if (Storage::exists($article->urlToImage)) {
                 Storage::delete($article->urlToImage);
             }
-            return back()->with('error', "Une erreur s'est produite veuillez réessayer")->withInput();
+            DB::rollBack();
+            return back()->with('error', $th->getMessage())->withInput();
+            // return back()->with('error', "Une erreur s'est produite veuillez réessayer")->withInput();
         }
 
         return redirect()->route('article.index')->with('success', 'Article crée avec succès');
@@ -93,10 +106,12 @@ class ArticleController extends Controller
     {
         try {
             $article =  Article::query()->where('slug', $slug)->firstOrFail();
+            $categories = Category::query()->latest('label')->get();
         } catch (\Throwable $th) {
-            return back()->with('error', "Une erreur s'est produite veuillez réessayer")->withInput();
+            return back()->with('error', $th->getMessage())->withInput();
+            // return back()->with('error', "Une erreur s'est produite veuillez réessayer")->withInput();
         }
-        return view('admin.article.edit')->with('article', $article);
+        return view('admin.article.edit')->with(['article' => $article, 'categories' => $categories]);
     }
 
     /**
@@ -114,8 +129,8 @@ class ArticleController extends Controller
             'description' => 'required|string',
             'image' => 'required_if:image,individual|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'content' => 'required|string',
-            // 'categories' => 'array',
-            // 'categories.*' => 'required|integer|min:1',
+            'categories' => 'required|array|distinct',
+            'categories.*' => 'required|integer|exists:categories,id',
         ]);
 
 
@@ -132,8 +147,14 @@ class ArticleController extends Controller
                 $article->urlToImage = $path;
             }
 
+            DB::beginTransaction();
             $article->updateOrFail($request->all());
+
+            $categories = Category::query()->findOrFail($request->categories);
+            $article->categories()->sync($categories);
+            DB::commit();
         } catch (\Throwable $th) {
+            DB::rollBack();
             if (Storage::exists($article->urlToImage)) {
                 Storage::delete($article->urlToImage);
             }

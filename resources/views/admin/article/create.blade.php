@@ -18,7 +18,7 @@
 @include('formerros')
 @include('flash')
 
-<form action="{{ route('article.store') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('article.store') }}" method="post" enctype="multipart/form-data" class="mb-3">
     @csrf
     <div class="form-group">
         <label for="author">Auteur</label>
@@ -59,7 +59,17 @@
         <input type="file" class="form-control-file none" name="image" id="image" style="display: none">
     </div>
 
-
+    <div class="form-group">
+        <label for="categories">Categorie(s) <small>Choissez les categories</small> </label>
+        <select class="custom-select" multiple name="categories[]" id="categories" aria-placeholder="Choissez les categories">
+            @foreach ($categories as $category)
+            <option value="{{$category->id}}" {{ (collect(old('categories'))->contains($category->id)) ? 'selected':'' }}>{{$category->label}}</option>
+            @endforeach
+        </select>
+        @error('categories')
+        <small id="" class="form-text text-danger">{{$message}}</small>
+        @enderror
+    </div>
 
     <div class="form-group">
         <label for="source">Source</label>

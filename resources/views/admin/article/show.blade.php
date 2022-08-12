@@ -36,6 +36,22 @@
             <p>&nbsp; &nbsp; &nbsp; &nbsp; {{$article->content}} </p>
         </div>
 
+        <div>
+            <p><strong>Categorie(s) :</strong></p>
+
+            <p>
+                &nbsp; &nbsp; &nbsp; &nbsp;
+                @for ($i = 0; $i < count($article->categories); $i++)
+                    <span>
+                        @if ($i > 0)
+                        -
+                        @endif
+                        {{$article->categories[$i]->label}}
+                    </span>
+                    @endfor
+            </p>
+        </div>
+
         <p><strong>Source :</strong> {{$article->source ? $article->source : "Inconnu"}} </p>
 
         <p><strong>Lien :</strong> <a href="{{$article->url}}" target="_blank">{{$article->url}}</a> </p>
