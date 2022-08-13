@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,9 +18,14 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::query()->latest()->get();
 
-        return view('admin.article.index')->with('articles', $articles);
+        if (Auth::check()) {
+            $articles = Article::query()->latest()->get();
+
+            return view('admin.article.index')->with('articles', $articles);
+        }
+
+        return redirect('')->with('error', "Oups ! Vous n'avez pas accès");
     }
 
     /**

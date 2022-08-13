@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BreakingNewsController;
 use App\Http\Controllers\BreakingNewsSettingsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
-use App\Models\Article;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -20,27 +20,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/', [FrontController::class, 'index'])->name('front.articles');
 Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
 Route::get('/category/{slugCategory}/article', [FrontController::class, 'showArticlesByCategory'])->name('front.show.articles.category');
 
-// Route::group(['prefix' => '{lang}'], function ($lang) {
-//     App::setLocale($lang);
-//     Route::prefix('admin')->group(function () {
-//         Route::resource('category', CategoryController::class);
-//     });
-// });
-// Route::group(['prefix' => '{locale}/admin', 'where' => ['locale' => '[a-zA-Z]{2}']], function ($locale) {
-//     if (!in_array($locale, ['en', 'fr'])) {
-//         abort(400);
-//     }
-
-//     App::setLocale($locale);
-//     Route::resource('category', CategoryController::class);
-// });
-
 Route::prefix('admin')->group(function () {
     App::setLocale('fr');
+    // Route::resource('/', [ArticleController::class, 'index'])->parameters(['article' => 'slug']);
     Route::resource('category', CategoryController::class);
     Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
 
