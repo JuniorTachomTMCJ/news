@@ -26,30 +26,32 @@ Route::get('registration', [AuthController::class, 'registration'])->name('regis
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/', [FrontController::class, 'index'])->name('front.articles');
-Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
-Route::get('/category/{slugCategory}/article', [FrontController::class, 'showArticlesByCategory'])->name('front.show.articles.category');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [FrontController::class, 'index'])->name('front.articles');
+    Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
+    Route::get('/category/{slugCategory}/article', [FrontController::class, 'showArticlesByCategory'])->name('front.show.articles.category');
 
-Route::prefix('admin')->group(function () {
-    App::setLocale('fr');
-    // Route::resource('/', [ArticleController::class, 'index'])->parameters(['article' => 'slug']);
-    Route::resource('category', CategoryController::class);
-    Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
+    Route::prefix('admin')->group(function () {
+        App::setLocale('fr');
+        // Route::resource('/', [ArticleController::class, 'index'])->parameters(['article' => 'slug']);
+        Route::resource('category', CategoryController::class);
+        Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
 
-    Route::prefix('breakingNews')->group(function () {
-        Route::resource('settings', BreakingNewsSettingsController::class, [
-            'names' => [
-                'create' => 'breakingNews.setting.create',
-                'store' => 'breakingNews.setting.store',
-                'edit' => 'breakingNews.setting.edit',
-                'update' => 'breakingNews.setting.update',
-                'index' => 'breakingNews.setting.index'
-            ]
-        ])->parameters(['setting' => 'slug']);
+        Route::prefix('breakingNews')->group(function () {
+            Route::resource('settings', BreakingNewsSettingsController::class, [
+                'names' => [
+                    'create' => 'breakingNews.setting.create',
+                    'store' => 'breakingNews.setting.store',
+                    'edit' => 'breakingNews.setting.edit',
+                    'update' => 'breakingNews.setting.update',
+                    'index' => 'breakingNews.setting.index'
+                ]
+            ])->parameters(['setting' => 'slug']);
+        });
+
+        Route::resource('breakingNews', BreakingNewsController::class);
+
+
+        Route::get('/category/{slug}/article', [CategoryController::class, 'showArticles'])->name('article.show.articles');
     });
-
-    Route::resource('breakingNews', BreakingNewsController::class);
-
-
-    Route::get('/category/{slug}/article', [CategoryController::class, 'showArticles'])->name('article.show.articles');
 });

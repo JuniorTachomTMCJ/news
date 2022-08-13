@@ -105,7 +105,7 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuler</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                                         </div>
                                     </form>
@@ -129,7 +129,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-danger">Supprimer</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuler</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                                         </div>
                                     </form>
                                 </div>
@@ -183,7 +183,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuler</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
             </div>
         </form>
