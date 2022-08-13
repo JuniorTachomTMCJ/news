@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Str;
 
+$DATABASE_URL = parse_url('postgres://hsbvgsajvlazxu:08757afdc946465cb608be606ffb10cea6ab92bbb38d51978d26ca5556127621@ec2-44-206-137-96.compute-1.amazonaws.com:5432/dbnd2rl58m5rn6');
+
 return [
 
     /*
@@ -15,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,6 +34,7 @@ return [
     | choice installed on your machine before you begin development.
     |
     */
+
 
     'connections' => [
 
@@ -65,12 +68,13 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => env('DATABASE_URL', 'postgres://hsbvgsajvlazxu:08757afdc946465cb608be606ffb10cea6ab92bbb38d51978d26ca5556127621@ec2-44-206-137-96.compute-1.amazonaws.com:5432/dbnd2rl58m5rn6'),
+
+            'host' => env('DB_HOST', $DATABASE_URL["host"]),
+            'port' => env('DB_PORT', $DATABASE_URL["port"]),
+            'database' => env('DB_DATABASE', ltrim($DATABASE_URL["path"], "/")),
+            'username' => env('DB_USERNAME', $DATABASE_URL["user"]),
+            'password' => env('DB_PASSWORD', $DATABASE_URL["pass"]),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -123,7 +127,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
