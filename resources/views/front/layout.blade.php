@@ -61,7 +61,33 @@
         <i class="fa-solid fa-angle-up"></i>
     </div>
 
+    {{-- News Letter --}}
+    <div class="fixed-bottom alert alert-primary alert-dismissible fade show bg-transparent" role="alert" id="newsletter">
+        <button type="button" class="btn-close" aria-label="Close"></button>
 
+        <div class="container bg-info text-white p-4">
+            <div class="row">
+                <div class="col text-center">
+                    <p class="text-uppercase font-weight-bold text-lg ">newsletter</p>
+                    <p>Suivre nos dernières nouvelles et événements. Abonnez-vous à notre newsletter</p>
+                </div>
+            </div>
+            <form action="{{ route('newsletter.register') }}" method="POST">
+                @csrf
+                <div class="form-group d-flex align-items-center gap-4 ">
+                    <input type="text" id="email_address" class="form-control flex-fill" name="email" required autofocus>
+                    <button type="submit" class="btn btn-primary">
+                        S'inscrire
+                    </button>
+                </div>
+                @error('email')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </form>
+        </div>
+    </div>
+
+    {{--End News Letter--}}
 
 
     <section class="py-4">
@@ -93,6 +119,7 @@
 
     <script>
         let btnGoToTop = document.querySelector('.btnGoToTop')
+
         btnGoToTop.addEventListener('click', () => {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         })
@@ -108,6 +135,18 @@
                 btnGoToTop.style.display = "none";
             }
         }
+
+        let newsletter = document.querySelector('#newsletter')
+
+        document.querySelector('#newsletter .btn-close').addEventListener('click', () => {
+            newsletter.classList.remove("show")
+            setTimeout(() => {
+                if (!newsletter.classList.contains('show')) {
+                    newsletter.classList.add("show")
+                }
+
+            }, 300000);
+        })
 
     </script>
 

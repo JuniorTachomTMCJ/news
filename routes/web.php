@@ -6,7 +6,9 @@ use App\Http\Controllers\BreakingNewsController;
 use App\Http\Controllers\BreakingNewsSettingsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,5 +55,21 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::get('/category/{slug}/article', [CategoryController::class, 'showArticles'])->name('article.show.articles');
+    });
+
+    Route::prefix('newsletter')->group(function () {
+        Route::post('register', function (Request $request) {
+            try {
+                Mail::send('emails.newsletterRegister', ['email' => $request->email], function ($message) use ($request) {
+                    $message->from('no-reply@news.com', 'news')
+                        ->to($request->email, 'news')
+                        ->subject('Enregistrement à la newsletter');
+                });
+                return back();
+            } catch (\Throwable $th) {
+                dd($th->getMessage());
+                return redirect()->route('article.index');
+            }
+        })->name('newsletter.register');
     });
 });
