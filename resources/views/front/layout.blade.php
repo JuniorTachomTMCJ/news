@@ -51,6 +51,15 @@
     </div>
 
 
+    <section class="py-4 bg-info">
+        <div class="container">
+            <div class="row">
+                <h2 class="col font-weight-bold ">Breaing News</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro a dignissimos enim aspernatur eligendi, temporibus mollitia recusandae, amet dolor asperiores quidem reprehenderit cumque tempora laboriosam pariatur harum commodi possimus.</p>
+            </div>
+        </div>
+    </section>
+
     <section class="py-4">
         <div class="container">
             @yield('breadcrumb')

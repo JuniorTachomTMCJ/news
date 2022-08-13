@@ -44,18 +44,38 @@
                 Menu
             </div>
 
-            <!-- Nav Item - Category -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('category.index')}}">
-                    <i class="fa fa-list-alt"></i>
-                    <span>Categorie</span></a>
-            </li>
-
             <!-- Nav Item - Article -->
             <li class="nav-item">
                 <a class="nav-link" href="{{route('article.index')}}">
                     <i class="far fa-newspaper"></i>
                     <span>Article</span></a>
+            </li>
+
+            <!-- Nav Item - BreakingNews -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('breakingNews.index')}}">
+                    <i class="far fa-newspaper"></i>
+                    <span>Nouvelles</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('breakingNews.index')}}" data-toggle="collapse" data-target="#collapseBreakingNews" aria-expanded="false" aria-controls="collapseBreakingNews">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Nouvelles</span>
+                </a>
+                <div id="collapseBreakingNews" class="collapse" aria-labelledby="headingBreakingNews" data-parent="#accordionSidebar" style="">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('breakingNews.index')}}">Liste</a>
+                        <a class="collapse-item" href="{{route('breakingNews.index')}}">Paramettres</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Category -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('category.index')}}">
+                    <i class="fa fa-list-alt"></i>
+                    <span>Categorie</span></a>
             </li>
 
             <!-- Divider -->
@@ -174,7 +194,7 @@
     <!-- Core plugin JavaScript-->
     <script src="{{URL::asset('admin_assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all BreakingNews-->
     <script src="{{URL::asset('admin_assets/js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BreakingNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
 use App\Models\Article;
@@ -41,6 +42,7 @@ Route::prefix('admin')->group(function () {
     App::setLocale('fr');
     Route::resource('category', CategoryController::class);
     Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
+    Route::resource('breakingNews', BreakingNewsController::class);
 
     Route::get('/category/{slug}/article', [CategoryController::class, 'showArticles'])->name('article.show.articles');
 });
