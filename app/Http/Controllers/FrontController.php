@@ -29,7 +29,8 @@ class FrontController extends Controller
 
         $data = $response->object();
 
-        $articles = Article::query()->where('created_at', Carbon::today())->latest('created_at')->get();
+        $articles = Article::query()->where('created_at', 'like', $date->format('Y-m-d') . '%')->latest('created_at')->get();
+
         $categories = Category::query()->latest()->get();
 
         if ($data && $data->status == "ok") {
@@ -64,5 +65,49 @@ class FrontController extends Controller
 
 
         return view('front.showArticles')->with(['articles' => $output, 'categories' => $categories]);
+    }
+
+    public function articleDetails(Request $request, String $slug)
+    {
+        $date = new DateTime();
+
+        $currentArticle = null;
+
+        if ($request->online == "true") {
+            $response = Http::get('https://newsapi.org/v2/everything', [
+                'q' => 'a',
+                'from' => $date->format('Y-m-d'),
+                'to' => $date->format('Y-m-d'),
+                'sortBy' => 'publishedAt',
+                'language' => 'fr',
+                'apiKey' => env('API_KEY_NEWS')
+            ]);
+
+            $data = $response->object();
+
+            if ($data && $data->status == "ok") {
+                $articles = $data->articles;
+
+                foreach ($articles as $article) {
+                    if ($article->publishedAt == $slug) {
+                        $currentArticle = $article;
+                        break;
+                    }
+                }
+            }
+        } elseif ($request->online == "false") {
+            try {
+                $currentArticle = Article::query()->where('slug', $slug)->firstOrFail();
+            } catch (\Throwable $th) {
+                return redirect()->route('front.articles');
+            }
+        }
+
+        if (!$currentArticle) {
+            return redirect()->route('front.articles');
+        }
+
+        $categories = Category::query()->latest()->get();
+        return view('front.detailArticle')->with(['article' => $currentArticle, 'categories' => $categories]);
     }
 }

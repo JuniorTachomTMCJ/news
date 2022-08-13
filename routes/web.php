@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [FrontController::class, 'index']);
+Route::get('/', [FrontController::class, 'index'])->name('front.articles');
+Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
 
 // Route::group(['prefix' => '{lang}'], function ($lang) {
 //     App::setLocale($lang);
