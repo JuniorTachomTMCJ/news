@@ -33,7 +33,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
                             @foreach ($categories as $category)
-                            <a class="dropdown-item" href="{{route('article.show.articles', ['slug', $category->slug])}}}"> {{ $category->label}}</a>
+                            <a class="dropdown-item" href="{{route('front.show.articles.category', ['slugCategory'=> $category->slug, 'label'=> $category->label])}}"> {{ $category->label}}</a>
                             @endforeach
                         </div>
                     </li>
@@ -53,6 +53,7 @@
 
     <section class="py-4">
         <div class="container">
+            @yield('breadcrumb')
             <div class="row g-4 flex-wrap-reverse ">
                 <div class="col-12 col-lg-3 p-4">
                     <div class="row bg-white rounded-3 p-4">
@@ -60,7 +61,7 @@
                         <ul class="list-unstyled ">
                             @foreach ($categories as $category)
                             <li class="mb-1">
-                                <a class="text-decoration-none " href="{{route('article.show.articles', ['slug', $category->slug])}}}">
+                                <a class="text-decoration-none " href="{{route('front.show.articles.category', ['slugCategory'=> $category->slug, 'label'=> $category->label])}}">
                                     {{ $category->label}}
                                 </a>
                             </li>
