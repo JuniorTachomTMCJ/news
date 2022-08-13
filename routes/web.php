@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BreakingNewsController;
+use App\Http\Controllers\BreakingNewsSettingsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
 use App\Models\Article;
@@ -42,7 +43,21 @@ Route::prefix('admin')->group(function () {
     App::setLocale('fr');
     Route::resource('category', CategoryController::class);
     Route::resource('article', ArticleController::class)->parameters(['article' => 'slug']);
+
+    Route::prefix('breakingNews')->group(function () {
+        Route::resource('settings', BreakingNewsSettingsController::class, [
+            'names' => [
+                'create' => 'breakingNews.setting.create',
+                'store' => 'breakingNews.setting.store',
+                'edit' => 'breakingNews.setting.edit',
+                'update' => 'breakingNews.setting.update',
+                'index' => 'breakingNews.setting.index'
+            ]
+        ])->parameters(['setting' => 'slug']);
+    });
+
     Route::resource('breakingNews', BreakingNewsController::class);
+
 
     Route::get('/category/{slug}/article', [CategoryController::class, 'showArticles'])->name('article.show.articles');
 });

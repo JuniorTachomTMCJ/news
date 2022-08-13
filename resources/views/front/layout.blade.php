@@ -16,6 +16,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    @if ($breakingNews)
+    <section class="py-4" style="color: {{$breakingNewsSettings->text_color}}; background-color: {{$breakingNewsSettings->bg_color}}; ">
+        <div class="container">
+            <div class="row">
+                <h2 class="col font-weight-bold ">Breacking News</h2>
+                <p>{{$breakingNews->content}}</p>
+            </div>
+        </div>
+    </section>
+    @endif
+
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
         <div class="container">
@@ -51,14 +62,7 @@
     </div>
 
 
-    <section class="py-4 bg-info">
-        <div class="container">
-            <div class="row">
-                <h2 class="col font-weight-bold ">Breaing News</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro a dignissimos enim aspernatur eligendi, temporibus mollitia recusandae, amet dolor asperiores quidem reprehenderit cumque tempora laboriosam pariatur harum commodi possimus.</p>
-            </div>
-        </div>
-    </section>
+
 
     <section class="py-4">
         <div class="container">

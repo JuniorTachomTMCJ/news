@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\BreakingNews;
+use App\Models\BreakingNewsSettings;
 use App\Models\Category;
 use Carbon\Carbon;
 use DateTime;
@@ -63,8 +65,10 @@ class FrontController extends Controller
             $output = $articles;
         }
 
+        $breakingNews = BreakingNews::query()->where('active', true)->first();
+        $breakingNewsSettings = BreakingNewsSettings::query()->first();
 
-        return view('front.showArticles')->with(['articles' => $output, 'categories' => $categories]);
+        return view('front.showArticles', compact(['categories', 'breakingNews', 'breakingNewsSettings']))->with(['articles' => $output]);
     }
 
     public function articleDetails(Request $request, String $slug)

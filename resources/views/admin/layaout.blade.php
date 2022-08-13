@@ -53,12 +53,6 @@
 
             <!-- Nav Item - BreakingNews -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('breakingNews.index')}}">
-                    <i class="far fa-newspaper"></i>
-                    <span>Nouvelles</span></a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('breakingNews.index')}}" data-toggle="collapse" data-target="#collapseBreakingNews" aria-expanded="false" aria-controls="collapseBreakingNews">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Nouvelles</span>
@@ -66,7 +60,7 @@
                 <div id="collapseBreakingNews" class="collapse" aria-labelledby="headingBreakingNews" data-parent="#accordionSidebar" style="">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('breakingNews.index')}}">Liste</a>
-                        <a class="collapse-item" href="{{route('breakingNews.index')}}">Paramettres</a>
+                        <a class="collapse-item" href="{{route('breakingNews.setting.index')}}">Paramettres</a>
                     </div>
                 </div>
             </li>
