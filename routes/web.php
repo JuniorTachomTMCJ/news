@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontController;
+use App\Models\Article;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.layaout');
-});
+Route::get('/', [FrontController::class, 'index']);
 
 // Route::group(['prefix' => '{lang}'], function ($lang) {
 //     App::setLocale($lang);
