@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    @if ($breakingNews)
+    @isset($breakingNews)
     <section class="py-4" style="color: {{$breakingNewsSettings->text_color}}; background-color: {{$breakingNewsSettings->bg_color}}; ">
         <div class="container">
             <div class="row">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </section>
-    @endif
+    @endisset
 
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">

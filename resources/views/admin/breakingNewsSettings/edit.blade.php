@@ -19,15 +19,7 @@
 @include('flash')
 
 <div class="row text-center align-items-center p-2" style="height: 192px" id="preview">
-
-    @if ($breakingNews)
-    <p class="col">
-        {{$breakingNews->content}}
-    </p>
-    @else
     <p class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem voluptas nihil necessitatibus, earum dolor quo iste quis ullam, veritatis iusto totam, sit provident quae vero eligendi consequatur suscipit odit laborum?</p>
-
-    @endif
 </div>
 
 <form action="{{ route('breakingNews.setting.update', ['setting'=> $breakingNewsSettings]) }}" method="post" class="mb-3">

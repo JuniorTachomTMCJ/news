@@ -19,15 +19,7 @@
 @include('flash')
 
 <div class="row text-center align-items-center" style="height: 192px" id="preview">
-
-    @if ($breakingNews)
-    <p>
-        {{$breakingNews->content}}
-    </p>
-    @else
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem voluptas nihil necessitatibus, earum dolor quo iste quis ullam, veritatis iusto totam, sit provident quae vero eligendi consequatur suscipit odit laborum?</p>
-
-    @endif
 </div>
 
 <form action="{{ route('breakingNews.setting.store') }}" method="post" class="mb-3">
