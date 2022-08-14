@@ -62,7 +62,7 @@
     </div>
 
     {{-- News Letter --}}
-    <div class="fixed-bottom alert alert-primary alert-dismissible fade show bg-transparent" role="alert" id="newsletter">
+    <div class="fixed-bottom alert alert-primary alert-dismissible fade bg-transparent" role="alert" id="newsletter">
         <button type="button" class="btn-close" aria-label="Close"></button>
 
         <div class="container bg-info text-white p-4">
@@ -108,6 +108,24 @@
                         </ul>
                     </div>
 
+                    <div class="bg-info text-white rounded-3 p-4 mt-4 row">
+                        <div class="col-12 text-center">
+                            <p class="text-uppercase font-weight-bold text-lg ">newsletter</p>
+                            <p>Suivre nos dernières nouvelles et événements. Abonnez-vous à notre newsletter</p>
+                        </div>
+                        <form action="{{ route('newsletter.register') }}" method="POST" class="col-12">
+                            @csrf
+                            <div class="form-group d-flex flex-column align-items-center gap-4 ">
+                                <input type="text" id="email_address" class="form-control flex-fill" name="email" required autofocus>
+                                <button type="submit" class="btn btn-primary">
+                                    S'inscrire
+                                </button>
+                            </div>
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </form>
+                    </div>
                 </div>
 
                 <div class="col-12 col-lg-9 p-4">
@@ -147,6 +165,12 @@
 
             }, 300000);
         })
+
+        setTimeout(() => {
+            if (!newsletter.classList.contains('show')) {
+                newsletter.classList.add("show")
+            }
+        }, 300000);
 
     </script>
 
