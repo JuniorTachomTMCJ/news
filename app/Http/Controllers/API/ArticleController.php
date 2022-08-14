@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ArticleController extends Controller
             return response()->json(['message' => 'Internal server error', 500]);
         }
 
-        return response()->json($articles);
+        return response()->json(ArticleResource::collection($articles));
     }
 
     /**
@@ -72,7 +73,7 @@ class ArticleController extends Controller
             return response()->json(['message' => 'Internal server error', 500]);
         }
 
-        return response()->json($article, 201);
+        return response()->json(new ArticleResource($article), 201);
     }
 
     /**
