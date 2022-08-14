@@ -28,11 +28,11 @@ Route::get('registration', [AuthController::class, 'registration'])->name('regis
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', [FrontController::class, 'index'])->name('front.articles');
-    Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
-    Route::get('/category/{slugCategory}/article', [FrontController::class, 'showArticlesByCategory'])->name('front.show.articles.category');
+Route::get('/', [FrontController::class, 'index'])->name('front.articles');
+Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
+Route::get('/category/{slugCategory}/article', [FrontController::class, 'showArticlesByCategory'])->name('front.show.articles.category');
 
+Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->group(function () {
         App::setLocale('fr');
         // Route::resource('/', [ArticleController::class, 'index'])->parameters(['article' => 'slug']);
