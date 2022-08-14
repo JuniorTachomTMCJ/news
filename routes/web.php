@@ -31,6 +31,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/', [FrontController::class, 'index'])->name('front.articles');
 Route::get('/article/{slug}', [FrontController::class, 'articleDetails'])->name('front.article.detail');
 Route::get('/category/{slugCategory}/article', [FrontController::class, 'showArticlesByCategory'])->name('front.show.articles.category');
+
 Route::prefix('newsletter')->group(function () {
     Route::post('register', function (Request $request) {
         try {
