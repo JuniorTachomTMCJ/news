@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -97,7 +98,15 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        try {
+            DB::beginTransaction();
+            $category->articles()->detach();
+            $category->delete();
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return back()->with('error', "Une erreur s'est produite veuillez réessayer");
+        }
 
         return redirect()->route('category.index')->with('success', 'Catégrie supprimée avec succès');
     }
