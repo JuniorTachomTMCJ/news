@@ -186,12 +186,16 @@ class ArticleController extends Controller
     public function destroy(String $slug)
     {
         try {
+            DB::beginTransaction();
             $article =  Article::query()->where('slug', $slug)->firstOrFail();
             if (Storage::exists($article->urlToImage)) {
                 Storage::delete($article->urlToImage);
             }
+            $article->categories()->detach();
             $article->delete();
+            DB::commit();
         } catch (\Throwable $th) {
+            DB::rollBack();
             return back()->with('error', "Une erreur s'est produite veuillez réessayer");
         }
         return redirect()->route('article.index')->with('success', 'Article supprimé avec succès');
